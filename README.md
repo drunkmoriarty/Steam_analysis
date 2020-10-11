@@ -1,4 +1,4 @@
-# SteamDB_analysis
+# Steam_analysis
 
-*SteamDB_analysis is a complete data analysis' project composed by three parts : collecting the data from steamdb's website, making a clean database in python and its visualisation.*
+*Steam_analysis is a complete data analysis' project composed by three parts : collecting the data by making calls to steam's API, making a clean database in python and its visualisation.*
 
