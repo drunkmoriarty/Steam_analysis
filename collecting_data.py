@@ -26,7 +26,10 @@ def get_id(name_account):
     url='https://steamidfinder.com/lookup/'+name_account
     pattern_id='<br>steamID64: <code>(.+?(?=</code>))'
     id_account=scrapper(url, pattern_id)
-    id_account=id_account[0]
+    if not id_account:
+        print('This account does not exist. Please try again.')
+    else:
+        id_account=id_account[0]
     return id_account
 
 def get_info_profil(key, id_account): 
@@ -39,15 +42,27 @@ def get_profil_games(key, id_account):
     url='http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='+key+'&steamid='+id_account+'&format=json'
     info=requests.get(url)
     info_games=info.json()
-    return info_games
+    return info_games   
+
+def get_data(info_profil, info_games): 
+    realname=info_profil['response']['players'][0]['realname']
+    account_country=info_profil['response']['players'][0]['loccountrycode']
+    return realname, account_country
+
+def display_info(name_account, id_account, realname, account_country): 
+    print('For the account named ', name_account, ':')
+    print('The steam id is ', id_account)
+    print('The name of the holder is ', realname)
+    print('The account is stated in ', account_country)
 
 def process():
     name_account=get_name_account()
     id_account=get_id(name_account)
     info_profil=get_info_profil(key_api, id_account)
     info_games=get_profil_games(key_api, id_account)
-    print(info_profil)
+    print(info_profil)  
     print('\n')
     print(info_games)
+    print('\n')
 
 process()
