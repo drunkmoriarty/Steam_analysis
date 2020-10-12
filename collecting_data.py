@@ -3,7 +3,8 @@ import html
 import json
 import re
 
-key_api='1830A7ABA911AB6BD53DED70F1683CE1'
+key_api='KEY_API'
+
 
 def get_name_account(): 
     name_account=input("In order to get infos about an account, please enter the name of the account: ")
