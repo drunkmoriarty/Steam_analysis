@@ -5,9 +5,6 @@ import re
 
 key_api='1830A7ABA911AB6BD53DED70F1683CE1'
 
-#The main goal of this app is to create an interactive interface where someone puts the name of an account and the app gives back information about it. 
-#The user can download the data (csv file) and iterate the action without relaunching the app. 
-
 def get_name_account(): 
     name_account=input("In order to get infos about an account, please enter the name of the account: ")
     return name_account
@@ -51,8 +48,7 @@ def get_data_profil(info_profil):
 
 def get_data_profil_games(info_games): 
     if not info_games['response']:
-        print("This account is private, data couldn't be retrieved.")
-        nb_owned_games= 'Private profil. No information'
+        nb_owned_games= 'a private profil. No information about their games could be retrieved'
         return nb_owned_games
     else : 
         nb_owned_games=info_games['response']['game_count']
