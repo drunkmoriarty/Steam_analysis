@@ -62,31 +62,45 @@ def get_data_profil_games(info_games):
             playtime_game.append(info_games['response']['games'][i]['playtime_forever'])
         return [nb_owned_games, games_id, playtime_game]
 
-def stats(games_id, playtime_game): 
+def raw_dataframe(games_id, playtime_game): 
     data={'Game Id' : games_id, 
     'Playtime': playtime_game}
     data=pd.DataFrame(data, columns=['Game Id', 'Playtime'])
     data=data.sort_values(by=['Playtime'], ascending=False)
     return data
 
-def display_info(name_account, id_account, realname, account_country, nb_owned_games, dataframe): 
+def json_file(name_account, id_account, real_name, country, nb_games_owned, list_games_owned, playtime_game):
+    info={}
+    info['profile']=[]
+    info['profile'].append({
+        'user_name' : name_account, 
+        'id_profil' : id_account, 
+        'real_name' : real_name, 
+        'country' : country, 
+        'nb_games_owned': nb_games_owned, 
+        'list_of_games' : list_games_owned,
+        'playtime_game' : playtime_game
+    })
+    with open('data_profil_'+name_account+'.', 'w') as jsonfile:
+        json.dump(info, jsonfile)
+    print(info)
+
+
+def display_info(name_account, id_account, realname, account_country, nb_owned_games): 
     print('For the account named ', name_account, ':')
     print('The steam id is ', id_account)
     print('The name of the holder is ', realname)
     print('The account is stated in ', account_country)
     print('The owner of the account has ', nb_owned_games, ' games on steam')
-    print(dataframe)
-
 
 def process():
-    
     name_account=get_name_account()
     id_account=get_id(name_account)
     info_profil=get_info_profil(key_api, id_account)
     profil_info=get_data_profil(info_profil)
     info_games=get_profil_games(key_api, id_account)
     owned_games=get_data_profil_games(info_games)
-    dataframe=stats(owned_games[1], owned_games[2])
-    display_info(name_account, id_account, profil_info[0], profil_info[1], owned_games[0], dataframe)
+    json_file(name_account, id_account,profil_info[0], profil_info[1], owned_games[0], owned_games[1], owned_games[2])
+    display_info(name_account, id_account, profil_info[0], profil_info[1], owned_games[0])
     
 process()
