@@ -25,10 +25,23 @@ def get_id(name_account):
     pattern_id='<br>steamID64: <code>(.+?(?=</code>))'
     id_account=scrapper(url, pattern_id)
     if not id_account:
+        id_account='NaN'
         print('This account does not exist. Please try again.')
-    else:
+        return id_account
+    else :
         id_account=id_account[0]
-    return id_account
+        return id_account
+            
+def loop_name(): 
+    i=0
+    while i<1 : 
+        name_account=get_name_account()
+        id_account=get_id(name_account)
+        if id_account=='NaN': 
+            i=0
+        else :
+            i=1
+            return [name_account, id_account]
 
 def get_info_profil(key, id_account): 
     url= "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+id_account+'&format=json'
@@ -85,7 +98,6 @@ def json_file(name_account, id_account, real_name, country, nb_games_owned, list
         json.dump(info, jsonfile)
     print(info)
 
-
 def display_info(name_account, id_account, realname, account_country, nb_owned_games): 
     print('For the account named ', name_account, ':')
     print('The steam id is ', id_account)
@@ -94,13 +106,12 @@ def display_info(name_account, id_account, realname, account_country, nb_owned_g
     print('The owner of the account has ', nb_owned_games, ' games on steam')
 
 def process():
-    name_account=get_name_account()
-    id_account=get_id(name_account)
-    info_profil=get_info_profil(key_api, id_account)
+    detail_profil=loop_name()
+    info_profil=get_info_profil(key_api, detail_profil[1])
     profil_info=get_data_profil(info_profil)
-    info_games=get_profil_games(key_api, id_account)
+    info_games=get_profil_games(key_api, detail_profil[1])
     owned_games=get_data_profil_games(info_games)
-    json_file(name_account, id_account,profil_info[0], profil_info[1], owned_games[0], owned_games[1], owned_games[2])
-    display_info(name_account, id_account, profil_info[0], profil_info[1], owned_games[0])
+    json_file(detail_profil[0], detail_profil[1], profil_info[0], profil_info[1], owned_games[0], owned_games[1], owned_games[2])
+    display_info(detail_profil[0], detail_profil[1], profil_info[0], profil_info[1], owned_games[0])
     
 process()
