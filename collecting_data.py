@@ -94,7 +94,7 @@ def json_file(name_account, id_account, real_name, country, nb_games_owned, list
         'list_of_games' : list_games_owned,
         'playtime_game' : playtime_game
     })
-    with open('data_profil_'+name_account+'.', 'w') as jsonfile:
+    with open('data_profil.json', 'w') as jsonfile:
         json.dump(info, jsonfile)
     print(info)
 
