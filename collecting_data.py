@@ -98,13 +98,6 @@ def json_file(name_account, id_account, real_name, country, nb_games_owned, list
         json.dump(info, jsonfile)
     print(info)
 
-def display_info(name_account, id_account, realname, account_country, nb_owned_games): 
-    print('For the account named ', name_account, ':')
-    print('The steam id is ', id_account)
-    print('The name of the holder is ', realname)
-    print('The account is stated in ', account_country)
-    print('The owner of the account has ', nb_owned_games, ' games on steam')
-
 def process():
     detail_profil=loop_name()
     info_profil=get_info_profil(key_api, detail_profil[1])
@@ -112,6 +105,5 @@ def process():
     info_games=get_profil_games(key_api, detail_profil[1])
     owned_games=get_data_profil_games(info_games)
     json_file(detail_profil[0], detail_profil[1], profil_info[0], profil_info[1], owned_games[0], owned_games[1], owned_games[2])
-    display_info(detail_profil[0], detail_profil[1], profil_info[0], profil_info[1], owned_games[0])
-    
+
 process()
