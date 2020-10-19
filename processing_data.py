@@ -59,6 +59,9 @@ def create_dataframe(name_games, playtime_game):
     df_account=pd.DataFrame(data, columns=['Games', 'Playtime', 'Part Playtime'])
     df_account=df_account.sort_values(['Playtime'], ascending=False)
     return df_account
+
+def save_csv(df):
+    df.to_csv('profile_info.csv', index=False)
    
 def display_info(name_account, id_account, realname, account_country, nb_owned_games): 
     print('For the account named ', name_account, ':')
@@ -73,6 +76,6 @@ def process():
     games_id=data_profil[4]
     games_name=destructor_json(database_games, games_id)
     df_account=create_dataframe(games_name, data_profil[5])
-    print(df_account)
+    save_csv(df_account)
 
 process()
