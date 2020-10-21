@@ -54,9 +54,9 @@ def create_dataframe(name_games, playtime_game):
 
     data={'Games' : name_games, 
     'Playtime' : playtime_game, 
-    'Part Playtime' : part_playtime}
+    'Part_Playtime' : part_playtime}
 
-    df_account=pd.DataFrame(data, columns=['Games', 'Playtime', 'Part Playtime'])
+    df_account=pd.DataFrame(data, columns=['Games', 'Playtime', 'Part_Playtime'])
     df_account=df_account.sort_values(['Playtime'], ascending=False)
     return df_account
 
