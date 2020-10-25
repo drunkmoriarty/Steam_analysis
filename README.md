@@ -11,5 +11,13 @@ The app is collecting **2 sorts of data** :
 The collected data is then stored in a json file. 
 
 ## 🧾 Data Processing
-This part focuses on cleaning the collected data and retrieve for each game its name. The information is displayed in a dataframe : game's name, playtime in minutes, part of this game in the total playtime (in percent). 
-Games are displayed by decreasing playtime. 
+This part focuses on **cleaning the collected data** and retrieve for each game its name. The information is displayed in a dataframe : game's name, playtime in minutes, part of this game in the total playtime (in percent). The dataframe is then saved in a csv file. 
+
+
+## 📈 Displaying data
+The final result is based on the sketch shown below. The app displays the collected data about the account : 
+- a text for profil's information
+- a pie chart of the playtime's distribution per game
+- a table for the 10 most played games. 
+
+![Final version Sketch](https://i.imgur.com/wL6NPGv.png)
