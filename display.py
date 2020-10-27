@@ -1,6 +1,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 
@@ -15,18 +16,28 @@ def order_data():
 
 def graphs(df) :
     partition=px.pie(df, values='Part_Playtime', names='Games')
-    return partition
+
+    table=go.Figure(data=[go.Table(header=dict(values=list(df.columns), line_color='darkslategray', align='center'),
+            cells=dict(values=[df.Games, df.Playtime, df.Part_Playtime], line_color='darkslategray',align='center'))
+            ])
+    return [partition, table]
+
 
 df_played=order_data()
 partition=graphs(df_played)
  
 app.layout = html.Div(children=[
-    html.H1(children="Here is Nda's profile "),
+    #html.H1(children="Here is "+ username +'s profile "),
 
-    dcc.Graph(
-        id='Partition',
-        figure=partition
-    )
+    html.Div(children='''
+        This is a work in progress made by Maria Rasskazova (drunkmoriarty). 
+        <br>
+        More info : https://github.com/drunkmoriarty/Steam_analysis
+    '''),
+
+    dcc.Graph(figure=partition[0]), 
+
+    dcc.Graph(figure=partition[1])
 ])
 
 if __name__ == '__main__':
