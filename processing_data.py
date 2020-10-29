@@ -46,30 +46,27 @@ def destructor_json(database_games,games_id):
 def create_dataframe(name_games, playtime_game): 
     sum_playtime=sum(playtime_game)
     part_playtime=[]
+    hour_playtime=[]
     nb_games=len(name_games)
     nb_games=int(nb_games)
     for k in range(nb_games): 
-        pplaytime=(playtime_game[k]/sum_playtime)*100
+        pplaytime=round((playtime_game[k]/sum_playtime)*100, 2)
+        hplaytime=round(playtime_game[k]/60)
         part_playtime.append(pplaytime)
+        hour_playtime.append(hplaytime)
 
     data={'Games' : name_games, 
     'Playtime' : playtime_game, 
+    'Playtime_Hours' : hour_playtime, 
     'Part_Playtime' : part_playtime}
 
-    df_account=pd.DataFrame(data, columns=['Games', 'Playtime', 'Part_Playtime'])
+    df_account=pd.DataFrame(data, columns=['Games', 'Playtime','Playtime_Hours', 'Part_Playtime'])
     df_account=df_account.sort_values(['Playtime'], ascending=False)
     return df_account
 
 def save_csv(df):
     df.to_csv('profile_info.csv', index=False)
    
-def display_info(name_account, id_account, realname, account_country, nb_owned_games): 
-    print('For the account named ', name_account, ':')
-    print('The steam id is ', id_account)
-    print('The name of the holder is ', realname)
-    print('The account is stated in ', account_country)
-    print('The owner of the account has ', nb_owned_games, ' games on steam')
-
 def process():
     data_profil=open_data()
     database_games=get_database()

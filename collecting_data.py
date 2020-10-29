@@ -96,7 +96,6 @@ def json_file(name_account, id_account, real_name, country, nb_games_owned, list
     })
     with open('data_profil.json', 'w') as jsonfile:
         json.dump(info, jsonfile)
-    print(info)
 
 def process():
     detail_profil=loop_name()
