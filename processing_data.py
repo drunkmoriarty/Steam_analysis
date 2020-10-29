@@ -7,13 +7,9 @@ def open_data():
     with open('data_profil.json', 'r') as jsonfile:
         data=json.load(jsonfile)
         for a in data['profile']: 
-            username=a['user_name']
-            realname=a['real_name']
-            country=a['country']
-            nb_games=a['nb_games_owned']
             games_id=a['list_of_games']
             playtime_game=a['playtime_game']
-    return[username, realname, country, nb_games, games_id, playtime_game]
+    return[games_id, playtime_game]
 
 def get_database():
     url = 'http://api.steampowered.com/ISteamApps/GetAppList/v0002/'
@@ -70,9 +66,9 @@ def save_csv(df):
 def process():
     data_profil=open_data()
     database_games=get_database()
-    games_id=data_profil[4]
+    games_id=data_profil[0]
     games_name=destructor_json(database_games, games_id)
-    df_account=create_dataframe(games_name, data_profil[5])
+    df_account=create_dataframe(games_name, data_profil[1])
     save_csv(df_account)
 
 process()
